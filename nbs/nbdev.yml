@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "mov-13"
+  site-url: "https://daveramseymusic.github.io/mov-13"
+  description: "trying the 13th time from scratch"
+  repo-branch: main
+  repo-url: "https://github.com/daveramseymusic/mov-13"
