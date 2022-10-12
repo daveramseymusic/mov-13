@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['get_movie_recs', 'search_movies']
 
-# %% ../nbs/movie_recommender.ipynb 18
+# %% ../nbs/movie_recommender.ipynb 14
 def get_movie_recs(full_title):
     "This function will use the `nn.CosineSimilarity` on the 50 latent factors for each movie to find the 30 movies most similar to your favorite movie."
     movie_factors = learn.model.i_weight.weight
@@ -12,7 +12,7 @@ def get_movie_recs(full_title):
     idx = distances.argsort(descending=True)
     return [o for o in titles.title[idx.tolist()][:30]]
 
-# %% ../nbs/movie_recommender.ipynb 20
+# %% ../nbs/movie_recommender.ipynb 15
 def search_movies(favorite_movie):
     movies_found = ''
     s = favorite_movie.lower()
