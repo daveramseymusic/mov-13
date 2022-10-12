@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "mov-13",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation."
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "mov-13",
+    "section": "Install",
+    "text": "Install\npip install mov_13"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "mov-13",
+    "section": "How to use",
+    "text": "How to use\nFill me in please! Don’t forget code examples:\n\n1+1\n\n2"
+  },
+  {
+    "objectID": "movie_recommender.html",
+    "href": "movie_recommender.html",
+    "title": "FastAI Movie Recommender",
+    "section": "",
+    "text": "#!pip install -Uqq fastai\n\nGradio allows you to easily publish your model onto the web for peope to use.\n\n# !pip install gradio\n\nnbdev is what we’re using to make this documentation easier and more presentable.\n\n# !pip install nbdev\n\nThese are the libraries we need\n\n# For modeling\nfrom fastai.tabular.all import *\nfrom fastai.collab import *\n\n#for publishing the model\nimport gradio as gr\n\nThe dataloaders we used to train the model from the 9 million reviews were 200MB so we use a csv instead. To convert from data loaders to pandas DataFrame use code hashtagged out just below\n\n# titles = pd.DataFrame(dls.classes['title']).reset_index() #create df\n# titles = titles.rename(columns={'index':'midx',0:'title'}) # rename columns\n\n\n#load your the model and movie titles with indexes (from the previous data loaders)\nlearn = load_learner(path/'model_movie_predictor_large9mil_ds_19_062.pkl')\ntitles = pd.read_csv(path/'movie_9mil_03_df_from_dls.csv'); titles.head()\n\n\n\n\n\n  \n    \n      \n      midx\n      title\n    \n  \n  \n    \n      0\n      0\n      #na#\n    \n    \n      1\n      1\n      'burbs, The (1989)\n    \n    \n      2\n      2\n      (500) Days of Summer (2009)\n    \n    \n      3\n      3\n      *batteries not included (1987)\n    \n    \n      4\n      4\n      ...And Justice for All (1979)\n    \n  \n\n\n\n\n\nsource\n\nget_movie_recs\n\n get_movie_recs (full_title)\n\nThis function will use the nn.CosineSimilarity on the 50 latent factors for each movie to find the 30 movies most similar to your favorite movie.\n\nsource\n\n\nsearch_movies_n_recommend\n\n search_movies_n_recommend (favorite_movie)\n\nThis function searches through the movies to find titles that contain the words in the favorite movie variable. Then it makes 30 recommendations using get_movie_recs\nNow we use gr.Interface() to create an inference block to be pushed to gradio\n\nintf = gr.Interface(fn=search_movies_n_recommend,\n                    inputs=gr.Textbox(lines=1,placeholder=\"Put Your Favorite Movie Here To See Similar Movie Recommendations...\"),\n                    outputs=[\"text\",\"text\"],\n                    examples=['Child\\'s Play (1988)','Rushmore','brothers Bloom','call me by your name', 'Jumanji (1995)','The Three Amigos'],\n                    title=\"Dave's Fast.AI Movie Recommender\",\n                    article='This recommender uses a collaborative filtering model fashioned from the [Fast.AI](https://github.com/fastai/fastbook/blob/master/08_collab.ipynb) library and trained on the 9 million movie reviews from the [Movie Lense Dataset](https://grouplens.org/datasets/movielens/25m/).  It trains Latent Factors to give movies and users descriptive weights that help predict thier reivews based on these factors.  The model was trained completely WITHOUT titles, descriptions, or categories and amazingly these things can be added to imporove this model.  Enjoy!'                    )\n\nNow we launch it so it can be used. here\n\nintf.launch(\n    inline=True, #True publishes the page in notebook\n    share=False) #True temporarily publishes the app on gradio website for 72 hours\n\nRunning on local URL:  http://127.0.0.1:7860\n\nTo create a public link, set `share=True` in `launch()`.\n\n\n\n\n\n(<gradio.routes.App>, 'http://127.0.0.1:7860/', None)\n\n\n\n\nExample of one of my favorite movies\n\nHere is an example of the model recommending movies similar to Beasts of the Southern wild\n\n\nfavorite_movie = 'Beasts of the Southern Wild (2012)'\n\n\nget_movie_recs(full_title=favorite_movie)\n\n['Beasts of the Southern Wild (2012)',\n 'Ginger Snaps (2000)',\n 'Leaving Las Vegas (1995)',\n 'Being John Malkovich (1999)',\n 'Little Children (2006)',\n 'Ghost World (2001)',\n 'Yellow Submarine (1968)',\n 'Secret of Roan Inish, The (1994)',\n 'Louis C.K.: Live at The Comedy Store (2015)',\n 'Neon Genesis Evangelion: The End of Evangelion (Shin seiki Evangelion Gekijô-ban: Air/Magokoro wo, kimi ni) (1997)',\n 'Atlantic City (1980)',\n 'Z (1969)',\n 'Sex, Lies, and Videotape (1989)',\n 'Princess and the Warrior, The (Krieger und die Kaiserin, Der) (2000)',\n 'Act of Killing, The (2012)',\n 'Birdman: Or (The Unexpected Virtue of Ignorance) (2014)',\n '24 Hour Party People (2002)',\n 'Animal Kingdom (2010)',\n 'Breaking the Waves (1996)',\n 'Rushmore (1998)',\n 'Videodrome (1983)',\n 'Last Night (1998)',\n 'City of God (Cidade de Deus) (2002)',\n 'Nosferatu (Nosferatu, eine Symphonie des Grauens) (1922)',\n 'Shining, The (1980)',\n 'Underground (1995)',\n 'Proposition, The (2005)',\n 'Brothers Bloom, The (2008)',\n 'Exit Through the Gift Shop (2010)',\n 'Lost in Translation (2003)']"
+  }
+]
